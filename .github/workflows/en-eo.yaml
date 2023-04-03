@@ -1,0 +1,29 @@
+---
+name: Build English-Esperanto dictionary
+
+on:
+  push: 
+    - "main"
+  schedule:
+    - cron: "0 0 * * SAT"
+
+permissions:
+  contents: write # This is required for actions/checkout
+
+jobs:
+  generate_dictionary:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Fetch and convert English-Esperanto dictionary
+        run: |
+          apt-get update && apt-get install -y stardict-tools curl
+          curl http://www.denisowski.org/Esperanto/ESPDIC/espdic.txt | sort -u -t: -k1,1 | sed "s/ : /\t/g" > /tmp/en-eo
+          cd /tmp
+          /usr/lib/stardict-tools/tabfile /tmp/en-eo
+          rm en-eo
+          tar -czvf denisowski-en-eo.tar.gz en-eo*
+      - name:
+        uses: actions/upload-artifact@v3
+        with:
+          name: denisowski-en-eo-dictionary
+          path: /tmp/denisowski-en-eo.tar.gz
