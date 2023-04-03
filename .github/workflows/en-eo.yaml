@@ -21,9 +21,12 @@ jobs:
           cd /tmp
           /usr/lib/stardict-tools/tabfile /tmp/en-eo
           rm en-eo
-          tar -czvf denisowski-en-eo.tar.gz en-eo*
-      - name:
-        uses: actions/upload-artifact@v3
+          tar -czvf /tmp/dictionary.tar.gz /tmp/en-eo/en-eo*
+      - name: Create release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name: denisowski-en-eo-dictionary
-          path: /tmp/denisowski-en-eo.tar.gz
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "en-eo stardict format dictionary"
+          files: |
+            /tmp/en-eo/dictionary.tar.gz
