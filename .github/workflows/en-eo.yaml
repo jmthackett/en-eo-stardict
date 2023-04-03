@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Fetch and convert English-Esperanto dictionary
         run: |
-          apt-get update && apt-get install -y stardict-tools curl
+          sudo apt-get update && sudo apt-get install -y stardict-tools curl
           curl http://www.denisowski.org/Esperanto/ESPDIC/espdic.txt | sort -u -t: -k1,1 | sed "s/ : /\t/g" > /tmp/en-eo
           cd /tmp
           /usr/lib/stardict-tools/tabfile /tmp/en-eo
