@@ -3,7 +3,7 @@ name: Build English-Esperanto dictionary
 
 on:
   push: 
-    - "main"
+    branches: [main]
   schedule:
     - cron: "0 0 * * SAT"
 
