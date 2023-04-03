@@ -20,7 +20,7 @@ jobs:
           curl http://www.denisowski.org/Esperanto/ESPDIC/espdic.txt | sort -u -t: -k1,1 | sed "s/ : /\t/g" > /tmp/en-eo
           cd /tmp
           /usr/lib/stardict-tools/tabfile /tmp/en-eo
-          tar -czvf /tmp/dictionary.tar.gz /tmp/en-eo*
+          tar -czvf /tmp/dictionary.tar.gz -C /tmp/en-eo*
       - name: Create release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
